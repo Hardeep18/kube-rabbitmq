@@ -21,11 +21,11 @@ kind: RoleBinding
 apiVersion: rbac.authorization.k8s.io/v1
 metadata:
   name: rabbitmq
-  namespace: rabbits
+  namespace: rabbitmq
 subjects:
 - kind: ServiceAccount
   name: rabbitmq
-  namespace: rabbits
+  namespace: rabbitmq
 roleRef:
   apiGroup: rbac.authorization.k8s.io
   kind: Role

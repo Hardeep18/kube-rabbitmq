@@ -9,7 +9,7 @@ kind create cluster --name rabbit --image kindest/node:v1.18.4
 ## Namespace
 
 ```
-kubectl create ns rabbits
+kubectl create ns rabbitmq
 ```
 
 ## Storage Class
@@ -23,16 +23,16 @@ standard (default)   rancher.io/local-path   Delete          WaitForFirstConsume
 ## Deployment
 
 ```
-kubectl apply -n rabbits -f .\kubernetes\rabbit-rbac.yaml
-kubectl apply -n rabbits -f .\kubernetes\rabbit-configmap.yaml
-kubectl apply -n rabbits -f .\kubernetes\rabbit-secret.yaml
-kubectl apply -n rabbits -f .\kubernetes\rabbit-statefulset.yaml
+kubectl apply -n rabbitmq -f .\kubernetes\rabbit-rbac.yaml
+kubectl apply -n rabbitmq -f .\kubernetes\rabbit-configmap.yaml
+kubectl apply -n rabbitmq -f .\kubernetes\rabbit-secret.yaml
+kubectl apply -n rabbitmq -f .\kubernetes\rabbit-statefulset.yaml
 ```
 
 ## Access the UI
 
 ```
-kubectl -n rabbits port-forward rabbitmq-0 8080:15672
+kubectl -n rabbitmq port-forward rabbitmq-0 8080:15672
 ```
 Go to htttp://localhost:8080 <br/>
 Username: `guest` <br/>
@@ -45,7 +45,7 @@ Password: `guest` <br/>
 cd messaging\rabbitmq\applications\publisher
 docker build . -t aimvector/rabbitmq-publisher:v1.0.0
 
-kubectl apply -f rabbits deployment.yaml
+kubectl apply -f rabbitmq deployment.yaml
 ```
 
 # Automatic Synchronization
@@ -54,7 +54,7 @@ https://www.rabbitmq.com/ha.html#unsynchronised-mirrors
 
 ```
 rabbitmqctl set_policy ha-fed \
-    ".*" '{"federation-upstream-set":"all", "ha-sync-mode":"automatic", "ha-mode":"nodes", "ha-params":["rabbit@rabbitmq-0.rabbitmq.rabbits.svc.cluster.local","rabbit@rabbitmq-1.rabbitmq.rabbits.svc.cluster.local","rabbit@rabbitmq-2.rabbitmq.rabbits.svc.cluster.local"]}' \
+    ".*" '{"federation-upstream-set":"all", "ha-sync-mode":"automatic", "ha-mode":"nodes", "ha-params":["rabbit@rabbitmq-0.rabbitmq.rabbitmq.svc.cluster.local","rabbit@rabbitmq-1.rabbitmq.rabbitmq.svc.cluster.local","rabbit@rabbitmq-2.rabbitmq.rabbitmq.svc.cluster.local"]}' \
     --priority 1 \
     --apply-to queues
 ```
