@@ -23,10 +23,10 @@ standard (default)   rancher.io/local-path   Delete          WaitForFirstConsume
 ## Deployment
 
 ```
-kubectl apply -n rabbitmq -f .\kubernetes\rabbit-rbac.yaml
-kubectl apply -n rabbitmq -f .\kubernetes\rabbit-configmap.yaml
-kubectl apply -n rabbitmq -f .\kubernetes\rabbit-secret.yaml
-kubectl apply -n rabbitmq -f .\kubernetes\rabbit-statefulset.yaml
+kubectl apply -n rabbitmq -f rabbit-rbac.yaml
+kubectl apply -n rabbitmq -f rabbit-configmap.yaml
+kubectl apply -n rabbitmq -f rabbit-secret.yaml
+kubectl apply -n rabbitmq -f rabbit-statefulset.yaml
 ```
 
 ## Access the UI
